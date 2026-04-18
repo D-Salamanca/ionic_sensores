@@ -111,3 +111,6 @@ Obtén tu API key gratis en: https://opencagedata.com/
 <uses-permission android:name="android.permission.VIBRATE" />
 <uses-permission android:name="android.permission.ACCESS_VIBRATOR_STATE" />
 ```
+
+<img width="1919" height="899" alt="image" src="https://github.com/user-attachments/assets/814ed689-142a-4f6c-9eab-ed3a0b2a5fe5" />
+
