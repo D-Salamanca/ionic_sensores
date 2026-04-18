@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   IonContent,
   IonHeader,
@@ -18,9 +19,12 @@ import {
   folderOutline,
   notificationsOutline,
   cloudOutline,
+  navigateOutline,
+  timeOutline,
+  searchOutline,
 } from 'ionicons/icons'
 import { useHistory } from 'react-router-dom'
-import React from 'react'
+
 const Home: React.FC = () => {
   const history = useHistory()
 
@@ -73,13 +77,31 @@ const Home: React.FC = () => {
       icon: cloudOutline,
       route: '/push-notifications',
     },
+    {
+      title: 'Maps & Tracking',
+      description: 'GPS tracking con mapa en tiempo real',
+      icon: navigateOutline,
+      route: '/maps',
+    },
+    {
+      title: 'Historial de Tracking',
+      description: 'Ver rutas guardadas',
+      icon: timeOutline,
+      route: '/tracking-history',
+    },
+    {
+      title: 'Lugares Cercanos',
+      description: 'OpenCage API nearby places',
+      icon: searchOutline,
+      route: '/nearby-places',
+    },
   ]
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Challenge 07 - Sensors</IonTitle>
+          <IonTitle>Challenge 08 - Sensors</IonTitle>
         </IonToolbar>
       </IonHeader>
 
