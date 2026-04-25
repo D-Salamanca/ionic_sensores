@@ -5,13 +5,12 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonText,
   IonButtons,
 } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 import useHaptics from '../hooks/useHaptics'
 import { ImpactStyle, NotificationType } from '@capacitor/haptics'
-import React from 'react'
+
 export default function HapticsPage() {
   const history = useHistory()
   const { impact, notification, vibrate } = useHaptics()
@@ -27,46 +26,63 @@ export default function HapticsPage() {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
-        <IonText color="medium">
-          <h3>Impact</h3>
-        </IonText>
+      <IonContent>
+        <div className="p-4 space-y-6">
+          <div>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1">
+              Impact
+            </p>
+            <div className="space-y-2">
+              <IonButton expand="block" onClick={() => impact(ImpactStyle.Light)}>
+                Light
+              </IonButton>
+              <IonButton expand="block" onClick={() => impact(ImpactStyle.Medium)}>
+                Medium
+              </IonButton>
+              <IonButton expand="block" onClick={() => impact(ImpactStyle.Heavy)}>
+                Heavy
+              </IonButton>
+            </div>
+          </div>
 
-        <IonButton expand="block" onClick={() => impact(ImpactStyle.Light)}>
-          Impact Light
-        </IonButton>
+          <div>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1">
+              Notification
+            </p>
+            <div className="space-y-2">
+              <IonButton
+                expand="block"
+                color="success"
+                onClick={() => notification(NotificationType.Success)}
+              >
+                Success
+              </IonButton>
+              <IonButton
+                expand="block"
+                color="warning"
+                onClick={() => notification(NotificationType.Warning)}
+              >
+                Warning
+              </IonButton>
+              <IonButton
+                expand="block"
+                color="danger"
+                onClick={() => notification(NotificationType.Error)}
+              >
+                Error
+              </IonButton>
+            </div>
+          </div>
 
-        <IonButton expand="block" onClick={() => impact(ImpactStyle.Medium)}>
-          Impact Medium
-        </IonButton>
-
-        <IonButton expand="block" onClick={() => impact(ImpactStyle.Heavy)}>
-          Impact Heavy
-        </IonButton>
-
-        <IonText color="medium">
-          <h3>Notification</h3>
-        </IonText>
-
-        <IonButton expand="block" color="success" onClick={() => notification(NotificationType.Success)}>
-          Notification Success
-        </IonButton>
-
-        <IonButton expand="block" color="warning" onClick={() => notification(NotificationType.Warning)}>
-          Notification Warning
-        </IonButton>
-
-        <IonButton expand="block" color="danger" onClick={() => notification(NotificationType.Error)}>
-          Notification Error
-        </IonButton>
-
-        <IonText color="medium">
-          <h3>Vibrate</h3>
-        </IonText>
-
-        <IonButton expand="block" fill="outline" onClick={vibrate}>
-          Vibrate
-        </IonButton>
+          <div>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1">
+              Vibrate
+            </p>
+            <IonButton expand="block" fill="outline" onClick={vibrate}>
+              Vibrate
+            </IonButton>
+          </div>
+        </div>
       </IonContent>
     </IonPage>
   )

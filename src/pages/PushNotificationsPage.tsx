@@ -4,15 +4,12 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonItem,
-  IonLabel,
-  IonText,
   IonButtons,
   IonButton,
 } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 import usePushNotifications from '../hooks/usePushNotifications'
-import React from 'react'
+
 export default function PushNotificationsPage() {
   const history = useHistory()
   const { token, notification, error } = usePushNotifications()
@@ -28,47 +25,49 @@ export default function PushNotificationsPage() {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
-        {error && (
-          <IonText color="danger">
-            <p>{error}</p>
-          </IonText>
-        )}
+      <IonContent>
+        <div className="p-4 space-y-4">
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
 
-        <IonText color="medium">
-          <h3>Device Token</h3>
-        </IonText>
+          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div className="px-4 py-2 bg-slate-50 border-b border-slate-100">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Device Token
+              </p>
+            </div>
+            <div className="px-4 py-3">
+              <p className="text-sm text-slate-700 font-mono break-all leading-relaxed">
+                {token ?? 'No token yet (requires native device)'}
+              </p>
+            </div>
+          </div>
 
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>Token</h2>
-            <p style={{ wordBreak: 'break-all' }}>
-              {token ?? 'No token yet (requires native device)'}
-            </p>
-          </IonLabel>
-        </IonItem>
-
-        {notification && (
-          <>
-            <IonText color="medium">
-              <h3>Last Notification</h3>
-            </IonText>
-
-            <IonItem>
-              <IonLabel>
-                <h2 style={{ fontWeight: 700 }}>Title</h2>
-                <p>{notification.title}</p>
-              </IonLabel>
-            </IonItem>
-
-            <IonItem>
-              <IonLabel>
-                <h2 style={{ fontWeight: 700 }}>Body</h2>
-                <p>{notification.body}</p>
-              </IonLabel>
-            </IonItem>
-          </>
-        )}
+          {notification && (
+            <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+              <div className="px-4 py-2 bg-slate-50 border-b border-slate-100">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  Last Notification
+                </p>
+              </div>
+              <div className="divide-y divide-slate-100">
+                <div className="flex justify-between items-center px-4 py-3">
+                  <span className="text-sm text-slate-500">Title</span>
+                  <span className="text-sm font-semibold text-slate-800">{notification.title}</span>
+                </div>
+                <div className="flex justify-between items-start px-4 py-3">
+                  <span className="text-sm text-slate-500">Body</span>
+                  <span className="text-sm font-semibold text-slate-800 text-right max-w-xs">
+                    {notification.body}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </IonContent>
     </IonPage>
   )

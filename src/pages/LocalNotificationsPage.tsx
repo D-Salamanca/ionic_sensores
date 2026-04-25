@@ -8,13 +8,12 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonText,
   IonButtons,
 } from '@ionic/react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import useLocalNotifications from '../hooks/useLocalNotifications'
-import React from 'react'
+
 export default function LocalNotificationsPage() {
   const history = useHistory()
   const { isPending, error, scheduleNotification } = useLocalNotifications()
@@ -34,46 +33,47 @@ export default function LocalNotificationsPage() {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
-        <IonItem>
-          <IonLabel position="stacked">Title</IonLabel>
-          <IonInput
-            value={title}
-            onIonInput={e => setTitle(e.detail.value ?? '')}
-          />
-        </IonItem>
+      <IonContent>
+        <div className="p-4 space-y-3">
+          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <IonItem lines="full">
+              <IonLabel position="stacked">Title</IonLabel>
+              <IonInput
+                value={title}
+                onIonInput={e => setTitle(e.detail.value ?? '')}
+              />
+            </IonItem>
+            <IonItem lines="full">
+              <IonLabel position="stacked">Body</IonLabel>
+              <IonInput
+                value={body}
+                onIonInput={e => setBody(e.detail.value ?? '')}
+              />
+            </IonItem>
+            <IonItem lines="none">
+              <IonLabel position="stacked">Delay (seconds)</IonLabel>
+              <IonInput
+                value={seconds}
+                type="number"
+                onIonInput={e => setSeconds(e.detail.value ?? '5')}
+              />
+            </IonItem>
+          </div>
 
-        <IonItem>
-          <IonLabel position="stacked">Body</IonLabel>
-          <IonInput
-            value={body}
-            onIonInput={e => setBody(e.detail.value ?? '')}
-          />
-        </IonItem>
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
 
-        <IonItem>
-          <IonLabel position="stacked">Delay (seconds)</IonLabel>
-          <IonInput
-            value={seconds}
-            type="number"
-            onIonInput={e => setSeconds(e.detail.value ?? '5')}
-          />
-        </IonItem>
-
-        {error && (
-          <IonText color="danger">
-            <p>{error}</p>
-          </IonText>
-        )}
-
-        <IonButton
-          expand="block"
-          className="ion-margin-top"
-          disabled={isPending}
-          onClick={() => scheduleNotification(title, body, Number(seconds))}
-        >
-          Schedule Notification
-        </IonButton>
+          <IonButton
+            expand="block"
+            disabled={isPending}
+            onClick={() => scheduleNotification(title, body, Number(seconds))}
+          >
+            Schedule Notification
+          </IonButton>
+        </div>
       </IonContent>
     </IonPage>
   )

@@ -4,18 +4,27 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonItem,
-  IonLabel,
-  IonText,
   IonButtons,
   IonButton,
 } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 import useMotion from '../hooks/useMotion'
-import React from 'react'
+
 export default function MotionPage() {
   const history = useHistory()
   const { accel, orientation, error } = useMotion()
+
+  const accelRows = [
+    { label: 'X', value: accel?.x?.toFixed(4) ?? 'N/A' },
+    { label: 'Y', value: accel?.y?.toFixed(4) ?? 'N/A' },
+    { label: 'Z', value: accel?.z?.toFixed(4) ?? 'N/A' },
+  ]
+
+  const orientationRows = [
+    { label: 'Alpha', value: orientation?.alpha?.toFixed(4) ?? 'N/A' },
+    { label: 'Beta', value: orientation?.beta?.toFixed(4) ?? 'N/A' },
+    { label: 'Gamma', value: orientation?.gamma?.toFixed(4) ?? 'N/A' },
+  ]
 
   return (
     <IonPage>
@@ -28,62 +37,46 @@ export default function MotionPage() {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
-        {error && (
-          <IonText color="danger">
-            <p>{error}</p>
-          </IonText>
-        )}
+      <IonContent>
+        <div className="p-4 space-y-4">
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
 
-        <IonText color="medium">
-          <h3>Accelerometer</h3>
-        </IonText>
+          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div className="px-4 py-2 bg-slate-50 border-b border-slate-100">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Accelerometer
+              </p>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {accelRows.map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center px-4 py-3">
+                  <span className="text-sm text-slate-500">{label}</span>
+                  <span className="text-sm font-semibold text-slate-800 font-mono">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>X</h2>
-            <p>{accel?.x?.toFixed(4) ?? 'N/A'}</p>
-          </IonLabel>
-        </IonItem>
-
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>Y</h2>
-            <p>{accel?.y?.toFixed(4) ?? 'N/A'}</p>
-          </IonLabel>
-        </IonItem>
-
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>Z</h2>
-            <p>{accel?.z?.toFixed(4) ?? 'N/A'}</p>
-          </IonLabel>
-        </IonItem>
-
-        <IonText color="medium">
-          <h3>Orientation</h3>
-        </IonText>
-
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>Alpha</h2>
-            <p>{orientation?.alpha?.toFixed(4) ?? 'N/A'}</p>
-          </IonLabel>
-        </IonItem>
-
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>Beta</h2>
-            <p>{orientation?.beta?.toFixed(4) ?? 'N/A'}</p>
-          </IonLabel>
-        </IonItem>
-
-        <IonItem>
-          <IonLabel>
-            <h2 style={{ fontWeight: 700 }}>Gamma</h2>
-            <p>{orientation?.gamma?.toFixed(4) ?? 'N/A'}</p>
-          </IonLabel>
-        </IonItem>
+          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div className="px-4 py-2 bg-slate-50 border-b border-slate-100">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Orientation
+              </p>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {orientationRows.map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center px-4 py-3">
+                  <span className="text-sm text-slate-500">{label}</span>
+                  <span className="text-sm font-semibold text-slate-800 font-mono">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </IonContent>
     </IonPage>
   )
